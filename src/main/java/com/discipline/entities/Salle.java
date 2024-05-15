@@ -3,6 +3,9 @@ package com.discipline.entities;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -12,6 +15,7 @@ import lombok.*;
 @Entity
 @Table(name = "salle")
 public class Salle {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String salle;
 
