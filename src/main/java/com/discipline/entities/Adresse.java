@@ -1,5 +1,11 @@
 package com.discipline.entities;
 
+import javax.validation.constraints.NotNull;
+
+import com.discipline.enums.TypeAdresse;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,11 +21,16 @@ public class Adresse {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String adresse;
-    private String type_adresse;
+    private TypeAdresse type_adresse;
 
     // Relation ManyToOne avec Enseignant
     @ManyToOne
     @JoinColumn(name = "enseignant_id")
+
+    @NotNull
+    @JsonBackReference
     private Enseignant enseignant;
 }

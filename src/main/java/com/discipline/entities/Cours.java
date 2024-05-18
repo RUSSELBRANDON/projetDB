@@ -3,6 +3,7 @@ package com.discipline.entities;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,7 @@ import lombok.*;
 public class Cours {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+     @Column(unique=true)
     private String titre;
     private LocalDateTime date;
     private LocalDate jour;

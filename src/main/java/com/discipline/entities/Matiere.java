@@ -2,6 +2,7 @@ package com.discipline.entities;
 
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,7 @@ import lombok.*;
 public class Matiere {
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-
+    @Column(unique=true)
     private String matiere;
 
     // Définir la relation Many-to-Many avec Niveau
