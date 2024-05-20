@@ -1,7 +1,6 @@
 package com.discipline.entities;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,10 +19,9 @@ import lombok.*;
 public class Cours {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-     @Column(unique=true)
+    @Column(unique=true)
     private String titre;
-    private LocalDateTime date;
-    private LocalDate jour;
+    private List<String> jour;
 
     @ManyToOne
     @JoinColumn(name = "enseignant_id")
