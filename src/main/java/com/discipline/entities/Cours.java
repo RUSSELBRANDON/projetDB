@@ -2,9 +2,9 @@ package com.discipline.entities;
 
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+// import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+// import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +18,7 @@ import lombok.*;
 
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+// @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "cours")
 public class Cours {
@@ -30,14 +30,16 @@ public class Cours {
 
     @ManyToOne
     @JoinColumn(name = "enseignant_id")
-    @JsonBackReference
+    @JsonIgnore
     private Enseignant enseignant;
     
     @ManyToOne
     @JoinColumn(name = "salle_id")
+    @JsonIgnore
     private Salle salle;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "matiere_id")
     private Matiere matiere;
 }

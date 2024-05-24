@@ -41,4 +41,15 @@ public class FiliereServicesImplementation implements FiliereServices {
     public void deleteAllFilieres() {
         filiereRepository.deleteAll();
     }
+
+    @Override
+    public Filiere findFiliereByNom(String nom) {
+        List<Filiere> filiereList = filiereRepository.findAll();
+        for(Filiere filiere: filiereList){
+            if (filiere.getNom().equals(nom)){
+                return filiere;
+            }
+        }
+        return null;
+    }
 }

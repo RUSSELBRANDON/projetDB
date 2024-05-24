@@ -41,4 +41,17 @@ public class AdresseServicesImplementation implements AdresseServices {
     public void deleteAllAdresses() {
         adresseRepository.deleteAll();
     }
+
+    @Override
+    public Adresse findAdresseByAdresse(String adresse) {
+        List<Adresse> adresseList = adresseRepository.findAll();
+        for (Adresse adresse1 : adresseList) {
+            // Comparaison de l'adresse de l'objet avec la chaîne 'adresse' passée en argument
+            if (adresse1.getAdresse().equals(adresse)) {
+                return adresse1;
+            }
+        }
+        return null;
+    }
+    
 }

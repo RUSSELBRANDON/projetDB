@@ -41,4 +41,15 @@ public class MatiereServicesImplementation implements MatiereServices {
     public void deleteAllMatieres() {
         matiereRepository.deleteAll();
     }
+
+    @Override
+    public Matiere findMatiereByMatiere(String matiere) {
+        List<Matiere> matiereList = matiereRepository.findAll();
+        for(Matiere matiere1: matiereList){
+            if (matiere1.getMatiere().equals(matiere)){
+                return matiere1;
+            }
+        }
+        return null;
+    }
 }

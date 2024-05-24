@@ -14,5 +14,7 @@ public interface SalleServices {
     public List<Salle> findAllSalles();
     public void deleteSalleById(Long id);
     public void deleteAllSalles();
+    public Salle findSalleBySalleNom(String salleNom); 
+    
 
 }

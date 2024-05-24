@@ -101,4 +101,13 @@ public class AdresseRestController {
         adresseServicesImplementation.deleteAdresseById(adresse.getId());
         return new ResponseEntity<>("Adresse supprimée avec succès", HttpStatus.OK);
     }
+
+    @GetMapping("/{adresse}")
+    public ResponseEntity<Object> findCoursByMatiere(@PathVariable String adresse){
+        Adresse adresse1 = adresseServicesImplementation.findAdresseByAdresse(adresse);
+        if (adresse1 != null){
+            return new ResponseEntity<>(adresse1, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Cette adresse n'existe pas", HttpStatus.NOT_FOUND);
+    }
 }

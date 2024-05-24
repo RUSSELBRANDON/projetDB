@@ -143,4 +143,13 @@ public class FiliereRestController {
         filiereServicesImplementation.deleteFiliereById(filiere.getId());
         return new ResponseEntity<>("Filiere supprimé avec succès", HttpStatus.OK);
     }
+
+    @GetMapping("/{nom}")
+    public ResponseEntity<Object> findFiliereByNom(@PathVariable String nom){
+        Filiere filiere = filiereServicesImplementation.findFiliereByNom(nom);
+        if (filiere != null){
+            return new ResponseEntity<>(filiere, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Cette filiere n'existe pas", HttpStatus.NOT_FOUND);
+    }
 }

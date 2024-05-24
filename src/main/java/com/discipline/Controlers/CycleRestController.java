@@ -1,6 +1,5 @@
 package com.discipline.Controlers;
 
-import java.util.HashSet;
 import java.util.*;
 
 import javax.validation.Valid;
@@ -117,6 +116,16 @@ public class CycleRestController {
         cycleServicesImplementation.deleteCycleById(cycle.getId());
 
         return new ResponseEntity<>("Cycle supprimé avec succès", HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{cycle}")
+    public ResponseEntity<Object> findCycleByCycle(@PathVariable String cycle){
+        Cycle cycle1 = cycleServicesImplementation.findCycleByCycle(cycle);
+        if (cycle1 != null){
+            return new ResponseEntity<>(cycle1, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Ce cycle n'existe pas", HttpStatus.NOT_FOUND);
     }
 
 }

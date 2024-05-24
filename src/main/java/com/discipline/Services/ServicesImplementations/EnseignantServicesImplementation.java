@@ -42,4 +42,17 @@ public class EnseignantServicesImplementation implements EnseignantServices {
     public void deleteAllEnseignants() {
         enseignantRepository.deleteAll();
     }
+
+    @Override
+    public Enseignant findEnseignantByMatricule(String matriculeEnseignant) {
+        List<Enseignant> enseignantList = enseignantRepository.findAll();
+        for(Enseignant enseignant : enseignantList){
+            if (enseignant.getMatricule().equals(matriculeEnseignant)){
+                return enseignant;
+            }
+        }
+        return null;
+    }
+
+    
 }

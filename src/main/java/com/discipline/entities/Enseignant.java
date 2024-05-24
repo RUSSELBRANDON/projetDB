@@ -41,6 +41,6 @@ public class Enseignant {
     private Set<Matiere> matieres;
 
     @OneToMany(mappedBy = "enseignant")
-    @JsonManagedReference
+   // @JsonManagedReference
     private Set<Cours> cours ;
 }

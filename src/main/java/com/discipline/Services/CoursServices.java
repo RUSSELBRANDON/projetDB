@@ -14,5 +14,6 @@ public interface CoursServices {
     public List<Cours> findAllCours();
     public void deleteCoursById(Long id);
     public void deleteAllCours();
+    public Cours findCoursByMatiere(String matiere);
 
 }

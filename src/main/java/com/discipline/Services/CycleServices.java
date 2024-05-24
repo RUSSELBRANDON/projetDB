@@ -15,5 +15,6 @@ public interface CycleServices {
     public List<Cycle> findAllCycles();
     public void deleteCycleById(Long id);
     public void deleteAllCycles();
+    public Cycle findCycleByCycle(String cycle);
 
 }

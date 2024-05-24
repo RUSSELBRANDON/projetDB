@@ -43,4 +43,17 @@ public class CoursServicesImplementation implements CoursServices {
         coursRepository.deleteAll();
     }
 
+    @Override
+    public Cours findCoursByMatiere(String matiere) {
+        List<Cours> coursList = coursRepository.findAll();
+        for (Cours cours : coursList) {
+            // Comparaison du nom de la matière du cours avec la chaîne 'matiere' passée en argument
+            if (cours.getMatiere().getMatiere().equals(matiere)) {
+                return cours;
+            }
+        }
+        return null;
+    }
+    
+
 }

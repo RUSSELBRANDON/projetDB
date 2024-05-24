@@ -14,5 +14,6 @@ public interface FiliereServices {
     public List<Filiere> findAllFilieres();
     public void deleteFiliereById(Long id);
     public void deleteAllFilieres();
+    public Filiere findFiliereByNom(String nom);
 
 }

@@ -43,4 +43,17 @@ public class SalleServicesImplementation implements SalleServices {
     public void deleteAllSalles() {
         salleRepository.deleteAll();
     }
+
+    @Override
+    public Salle findSalleBySalleNom(String salleNom) {
+        List<Salle> salleList = salleRepository.findAll();
+        for(Salle salle: salleList){
+            if (salle.getSalle().equals(salleNom)){
+                return salle;
+            }
+        }
+        return null;
+    }
+
+
 }

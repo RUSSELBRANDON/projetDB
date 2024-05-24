@@ -41,4 +41,15 @@ public class CycleServicesImplentation implements CycleServices {
     public void deleteAllCycles() {
         cycleRepository.deleteAll();
     }
+
+    @Override
+    public Cycle findCycleByCycle(String cycle) {
+        List<Cycle> cycleList = cycleRepository.findAll();
+        for(Cycle cycle1 : cycleList){
+            if (cycle1.getCycle().equals(cycle)){
+                return cycle1;
+            }
+        }
+        return null;
+    }
 }

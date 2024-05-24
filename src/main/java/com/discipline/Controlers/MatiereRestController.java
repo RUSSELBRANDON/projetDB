@@ -148,4 +148,13 @@ public class MatiereRestController {
         return new ResponseEntity<>("Matiere supprimé avec succès", HttpStatus.OK);
     }
 
+    @GetMapping("/{matiere}")
+    public ResponseEntity<Object> findMatiereBymatiere(@PathVariable String matiere){
+        Matiere matiere1 = matiereServicesImplementation.findMatiereByMatiere(matiere);
+        if (matiere1 != null){
+            return new ResponseEntity<>(matiere1, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Cette filiere n'existe pas", HttpStatus.NOT_FOUND);
+    }
+
 }

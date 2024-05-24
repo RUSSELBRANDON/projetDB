@@ -14,5 +14,6 @@ public interface NiveauServices {
     public List<Niveau> findAllNiveaux();
     public void deleteNiveauById(Long id);
     public void deleteAllNiveaux();
+    public Niveau findNiveauByNiveau(String niveau);
 
 }

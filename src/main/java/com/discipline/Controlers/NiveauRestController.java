@@ -140,4 +140,13 @@ public class NiveauRestController {
         niveauServicesImplementation.deleteNiveauById(niveau.getId());
         return new ResponseEntity<>("Niveau supprimé avec succès", HttpStatus.OK);
     }
+
+    @GetMapping("/{niveau}")
+    public ResponseEntity<Object> findNiveauByNiveau(@PathVariable String niveau){
+       Niveau niveau1 = niveauServicesImplementation.findNiveauByNiveau(niveau);
+        if (niveau1 != null){
+            return new ResponseEntity<>(niveau1, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Cette filiere n'existe pas", HttpStatus.NOT_FOUND);
+    }
 }

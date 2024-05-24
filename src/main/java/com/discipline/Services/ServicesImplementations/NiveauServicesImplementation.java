@@ -42,4 +42,15 @@ public class NiveauServicesImplementation implements NiveauServices {
     public void deleteAllNiveaux() {
         niveauRepository.deleteAll();
     }
+
+    @Override
+    public Niveau findNiveauByNiveau(String niveau) {
+        List<Niveau> niveauList = niveauRepository.findAll();
+        for(Niveau niveau1: niveauList){
+            if (niveau1.getNiveau().equals(niveau)){
+                return niveau1;
+            }
+        }
+        return null;
+    }
 }

@@ -105,4 +105,14 @@ public class CoursRestController {
         return new ResponseEntity<>("Cours supprimé avec succès", HttpStatus.OK);
     }
 
+
+    @GetMapping("/{matiere}")
+    public ResponseEntity<Object> findCoursByMatiere(@PathVariable String matiere){
+        Cours cours = coursServicesImplementation.findCoursByMatiere(matiere);
+        if (cours != null){
+            return new ResponseEntity<>(cours, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Ce cours n'existe pas", HttpStatus.NOT_FOUND);
+    }
+
 }

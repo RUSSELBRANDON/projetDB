@@ -18,7 +18,6 @@ import lombok.*;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-
 @Entity
 @Table(name = "niveau")
 public class Niveau {

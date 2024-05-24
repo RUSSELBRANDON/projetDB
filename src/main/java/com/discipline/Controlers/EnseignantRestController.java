@@ -118,5 +118,15 @@ public class EnseignantRestController {
 
         return new ResponseEntity<>("Enseignant supprimé avec succès", HttpStatus.OK);
     }
+
+
+    @GetMapping("/{matricule}")
+    public ResponseEntity<Object> findEnseignantByMatricule(@PathVariable String matriculeEnseignant){
+        Enseignant enseignant = enseignantServicesImplementation.findEnseignantByMatricule(matriculeEnseignant);
+        if (enseignant != null){
+            return new ResponseEntity<>(enseignant, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Cet enseignant n'existe pas", HttpStatus.NOT_FOUND);
+    }
     
 }

@@ -116,4 +116,13 @@ public class SalleRestController {
         return new ResponseEntity<>("Enseignant supprimé avec succès", HttpStatus.OK);
     }
 
+    @GetMapping("/{salleNom}")
+    public ResponseEntity<Object> findSalleBySalleNom(@PathVariable String salleNom){
+        Salle salle = salleServicesImplementation.findSalleBySalleNom(salleNom);
+        if (salle != null){
+            return new ResponseEntity<>(salle, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>("Cette filiere n'existe pas", HttpStatus.NOT_FOUND);
+    }
+
 }
