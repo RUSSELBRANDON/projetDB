@@ -11,7 +11,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @Builder
 
 @Entity
 @Table(name = "salle")
@@ -24,4 +23,34 @@ public class Salle {
 
      @OneToMany(mappedBy = "salle")
     private Set<Cours> cours ;
+
+    public Salle(Long id, String salle, Set<Cours> cours) {
+        this.id = id;
+        this.salle = salle;
+        this.cours = cours;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSalle() {
+        return salle;
+    }
+
+    public void setSalle(String salle) {
+        this.salle = salle;
+    }
+
+    public Set<Cours> getCours() {
+        return cours;
+    }
+
+    public void setCours(Set<Cours> cours) {
+        this.cours = cours;
+    }
 }

@@ -2,11 +2,13 @@ package com.discipline.Services.ServicesImplementations;
 
 import com.discipline.Services.MatiereServices;
 import com.discipline.entities.Matiere;
+import com.discipline.entities.Salle;
 import com.discipline.repositories.MatiereRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MatiereServicesImplementation implements MatiereServices {
@@ -40,5 +42,16 @@ public class MatiereServicesImplementation implements MatiereServices {
     @Override
     public void deleteAllMatieres() {
         matiereRepository.deleteAll();
+    }
+
+    @Override
+    public Matiere findByMatiereName(String matiere) {
+        List<Matiere> matiereList = matiereRepository.findAll();
+        for (Matiere matiere1 : matiereList){
+            if (Objects.equals(matiere1.getMatiere(), matiere)){
+                return matiere1;
+            }
+        }
+        return null;
     }
 }

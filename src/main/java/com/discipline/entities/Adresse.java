@@ -23,7 +23,7 @@ public class Adresse {
     private Long id;
 
     @Column(unique = true)
-    private String adresse;
+    private String adresseValue;
     private TypeAdresse type_adresse;
 
     // Relation ManyToOne avec Enseignant
@@ -33,4 +33,36 @@ public class Adresse {
     @NotNull
     @JsonBackReference
     private Enseignant enseignant;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAdresseValue() {
+        return adresseValue;
+    }
+
+    public void setAdresseValue(String adresseValue) {
+        this.adresseValue = adresseValue;
+    }
+
+    public TypeAdresse getType_adresse() {
+        return type_adresse;
+    }
+
+    public void setType_adresse(TypeAdresse type_adresse) {
+        this.type_adresse = type_adresse;
+    }
+
+    public Enseignant getEnseignant() {
+        return enseignant;
+    }
+
+    public void setEnseignant(Enseignant enseignant) {
+        this.enseignant = enseignant;
+    }
 }

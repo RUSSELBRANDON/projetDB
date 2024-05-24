@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -42,5 +43,16 @@ public class SalleServicesImplementation implements SalleServices {
     @Override
     public void deleteAllSalles() {
         salleRepository.deleteAll();
+    }
+
+    @Override
+    public Salle findByClasseName(String salle) {
+        List<Salle> salleList = salleRepository.findAll();
+        for (Salle salle1 : salleList){
+            if (Objects.equals(salle1.getSalle(), salle)){
+                return salle1;
+            }
+        }
+        return null;
     }
 }

@@ -13,17 +13,17 @@ public class GestionEmploiDuTempsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GestionEmploiDuTempsApplication.class, args);
 	}
-	// @Bean
-    // public CommandLineRunner commandLineRunner(EnseignantRepository enseignantRepository) {
-    //     return args -> {
-    //         Enseignant enseignant = Enseignant.builder()
-    //                 .matricule("uds273932")
-    //                 .nom("ALBERTINE")
-    //                 .prenmon("alberto")
-    //                 .build();
-    //         enseignantRepository.save(enseignant);
-    //     };
-    // }
+//	 @Bean
+//     public CommandLineRunner commandLineRunner(EnseignantRepository enseignantRepository) {
+//         return args -> {
+//             Enseignant enseignant = Enseignant.builder()
+//                     .matricule("uds273932")
+//                     .nom("ALBERTINE")
+//                     .prenmon("alberto")
+//                     .build();
+//             enseignantRepository.save(enseignant);
+//         };
+//     }
 
 	
 

@@ -1,6 +1,7 @@
 package com.discipline.Services;
 
 import com.discipline.entities.Matiere;
+import com.discipline.entities.Salle;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface MatiereServices {
     public List<Matiere> findAllMatieres();
     public void deleteMatiereById(Long id);
     public void deleteAllMatieres();
+    public Matiere findByMatiereName(String matiere);
 
 }

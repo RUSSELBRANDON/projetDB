@@ -14,7 +14,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @Builder
 @Entity
 @Table(name = "matiere")
 public class Matiere {
@@ -38,4 +37,52 @@ public class Matiere {
 
      @OneToMany(mappedBy = "matiere")
     private Set<Cours> cours ;
+
+    public Matiere(Long id, String matiere, Set<Niveau> niveaux, Set<Enseignant> enseignants, Set<Cours> cours) {
+        this.id = id;
+        this.matiere = matiere;
+        this.niveaux = niveaux;
+        this.enseignants = enseignants;
+        this.cours = cours;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMatiere() {
+        return matiere;
+    }
+
+    public void setMatiere(String matiere) {
+        this.matiere = matiere;
+    }
+
+    public Set<Niveau> getNiveaux() {
+        return niveaux;
+    }
+
+    public void setNiveaux(Set<Niveau> niveaux) {
+        this.niveaux = niveaux;
+    }
+
+    public Set<Enseignant> getEnseignants() {
+        return enseignants;
+    }
+
+    public void setEnseignants(Set<Enseignant> enseignants) {
+        this.enseignants = enseignants;
+    }
+
+    public Set<Cours> getCours() {
+        return cours;
+    }
+
+    public void setCours(Set<Cours> cours) {
+        this.cours = cours;
+    }
 }

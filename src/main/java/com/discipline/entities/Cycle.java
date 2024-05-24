@@ -13,7 +13,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @Builder
 @Entity
 @Table(name="cycle")
 public class Cycle {
@@ -29,4 +28,34 @@ public class Cycle {
                joinColumns = @JoinColumn(name = "cycle_id"),
                inverseJoinColumns = @JoinColumn(name = "filiere_id"))
     private Set<Filiere> filieres;
+
+    public Cycle(Long id, String cycle, Set<Filiere> filieres) {
+        this.id = id;
+        this.cycle = cycle;
+        this.filieres = filieres;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
+    }
+
+    public Set<Filiere> getFilieres() {
+        return filieres;
+    }
+
+    public void setFilieres(Set<Filiere> filieres) {
+        this.filieres = filieres;
+    }
 }

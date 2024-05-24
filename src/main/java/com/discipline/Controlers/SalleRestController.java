@@ -30,12 +30,12 @@ public class SalleRestController {
 
     @GetMapping
 
-    public List<Salle> listeNiveau() {
+    public List<Salle> listeSalle() {
         return salleServicesImplementation.findAllSalles();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getNivaeu(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getSalle(@PathVariable("id") Long id) {
         Salle salle = salleServicesImplementation.findSalleById(id);
         if (salle != null) {
             return ResponseEntity.ok(salle);
@@ -46,7 +46,7 @@ public class SalleRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> ajouterNiveau(@Valid @RequestBody Salle salle, BindingResult result) {
+    public ResponseEntity<?> ajouterSalle(@Valid @RequestBody Salle salle, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Erreur de validation", HttpStatus.BAD_REQUEST);
         }

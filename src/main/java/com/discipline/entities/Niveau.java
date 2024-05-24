@@ -33,5 +33,37 @@ public class Niveau {
     // Définir la relation Many-to-Many avec Matiere
     @ManyToMany(mappedBy = "niveaux")
     private Set<Matiere> matieres;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(String niveau) {
+        this.niveau = niveau;
+    }
+
+    public Set<Filiere> getFilieres() {
+        return filieres;
+    }
+
+    public void setFilieres(Set<Filiere> filieres) {
+        this.filieres = filieres;
+    }
+
+    public Set<Matiere> getMatieres() {
+        return matieres;
+    }
+
+    public void setMatieres(Set<Matiere> matieres) {
+        this.matieres = matieres;
+    }
 }
 

@@ -28,7 +28,7 @@ public class AdresseRestController {
         return adresseServicesImplementation.findAllAdresses();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/rechercherUneAdresse/{id}")
     public ResponseEntity<?> getAdresse(@PathVariable("id") Long id) {
         Adresse adresse = adresseServicesImplementation.findAdresseById(id);
         if (adresse != null) {
@@ -65,7 +65,7 @@ public class AdresseRestController {
             }
     
             // Mettre à jour les champs de l'adresse
-            adresse.setAdresse(adresseDetails.getAdresse());
+            adresse.setAdresseValue(adresseDetails.getAdresseValue());
             adresse.setType_adresse(adresseDetails.getType_adresse());
     
             // Mettre à jour l'enseignant associé
