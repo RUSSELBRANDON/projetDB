@@ -2,7 +2,9 @@ package com.discipline.entities;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import lombok.*;
 
 
 @Getter @Setter @NoArgsConstructor @Builder @AllArgsConstructor @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "enseignant")
 public class Enseignant {
@@ -38,5 +41,6 @@ public class Enseignant {
     private Set<Matiere> matieres;
 
     @OneToMany(mappedBy = "enseignant")
+    @JsonManagedReference
     private Set<Cours> cours ;
 }

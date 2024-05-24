@@ -1,6 +1,6 @@
 package com.discipline.Controlers;
 
-import java.util.List;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -18,17 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discipline.Services.ServicesImplementations.FiliereServicesImplementation;
+import com.discipline.Services.ServicesImplementations.NiveauServicesImplementation;
+import com.discipline.Services.ServicesImplementations.CycleServicesImplentation;
+
+import com.discipline.entities.Cycle;
 import com.discipline.entities.Filiere;
+import com.discipline.entities.Niveau;
 
 @RestController
-
 @RequestMapping("/filieres")
 public class FiliereRestController {
     @Autowired
     FiliereServicesImplementation filiereServicesImplementation;
 
-    @GetMapping
+    @Autowired
+    NiveauServicesImplementation niveauServicesImplementation;
 
+    @Autowired
+    CycleServicesImplentation cycleServicesImplentation;
+
+    @GetMapping
     public List<Filiere> listeFiliere() {
         return filiereServicesImplementation.findAllFilieres();
     }
@@ -40,7 +49,7 @@ public class FiliereRestController {
             return ResponseEntity.ok(filiere);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Adresse not found with id: " + id);
+                    .body("Filiere not found with id: " + id);
         }
     }
 
@@ -50,8 +59,31 @@ public class FiliereRestController {
             return new ResponseEntity<>("Erreur de validation", HttpStatus.BAD_REQUEST);
         }
 
-        Filiere savedFiliere = filiereServicesImplementation.saveFiliere(filiere);
+        // Handle associations
+        if (filiere.getNiveaux() != null) {
+            Set<Niveau> niveaux = new HashSet<>();
+            for (Niveau niveau : filiere.getNiveaux()) {
+                Niveau existingNiveau = niveauServicesImplementation.findNiveauById(niveau.getId());
+                if (existingNiveau != null) {
+                    niveaux.add(existingNiveau);
+                }
+            }
+            filiere.setNiveaux(niveaux);
+        }
 
+        // Handle associations
+        if (filiere.getCycles() != null) {
+            Set<Cycle> cycles = new HashSet<>();
+            for (Cycle cycle : filiere.getCycles()) {
+                Cycle existingCycles =cycleServicesImplentation.findCycleById(cycle.getId());
+                if (existingCycles != null) {
+                    cycles.add(existingCycles);
+                }
+            }
+            filiere.setCycles(cycles);
+        }
+
+        Filiere savedFiliere = filiereServicesImplementation.saveFiliere(filiere);
         return new ResponseEntity<>(savedFiliere, HttpStatus.CREATED);
     }
 
@@ -62,34 +94,53 @@ public class FiliereRestController {
         }
 
         Filiere filiere = filiereServicesImplementation.findFiliereById(id);
-
         if (filiere == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("filiere not found with id: " + id);
+                    .body("Filiere not found with id: " + id);
         }
 
-        // Mettre à jour les champs de l'adresse
+        // Mettre à jour les champs de la filiere
         filiere.setNom(filiereDetails.getNom());
         filiere.setAnnee_scolaire(filiereDetails.getAnnee_scolaire());
         filiere.setNbre_place(filiereDetails.getNbre_place());
 
-        Filiere updatedFiliere = filiereServicesImplementation.saveFiliere(filiere);
+        // Handle associations
+        if (filiereDetails.getNiveaux() != null) {
+            Set<Niveau> niveaux = new HashSet<>();
+            for (Niveau niveau : filiereDetails.getNiveaux()) {
+                Niveau existingNiveau = niveauServicesImplementation.findNiveauById(niveau.getId());
+                if (existingNiveau != null) {
+                    niveaux.add(existingNiveau);
+                }
+            }
+            filiere.setNiveaux(niveaux);
+        }
 
+        // Handle associations
+        if (filiereDetails.getCycles() != null) {
+            Set<Cycle> cycles = new HashSet<>();
+            for (Cycle cycle : filiereDetails.getCycles()) {
+                Cycle existingCycle =cycleServicesImplentation.findCycleById(cycle.getId());
+                if (existingCycle != null) {
+                    cycles.add(existingCycle);
+                }
+            }
+            filiere.setCycles(cycles);
+        }
+
+        Filiere updatedFiliere = filiereServicesImplementation.saveFiliere(filiere);
         return new ResponseEntity<>(updatedFiliere, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> supprimerFiliere(@PathVariable Long id) {
         Filiere filiere = filiereServicesImplementation.findFiliereById(id);
-
         if (filiere == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Filiere not found with id: " + id);
         }
 
         filiereServicesImplementation.deleteFiliereById(filiere.getId());
-
         return new ResponseEntity<>("Filiere supprimé avec succès", HttpStatus.OK);
     }
-
 }

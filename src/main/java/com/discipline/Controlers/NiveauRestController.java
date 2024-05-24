@@ -1,6 +1,6 @@
 package com.discipline.Controlers;
 
-import java.util.List;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -17,19 +17,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.discipline.Services.ServicesImplementations.FiliereServicesImplementation;
 import com.discipline.Services.ServicesImplementations.NiveauServicesImplementation;
+import com.discipline.Services.ServicesImplementations.MatiereServicesImplementation;
+
+import com.discipline.entities.Filiere;
+import com.discipline.entities.Matiere;
 import com.discipline.entities.Niveau;
 
 
 @RestController
-
-@RequestMapping("/niveau")
+@RequestMapping("/niveaux")
 public class NiveauRestController {
     @Autowired
     NiveauServicesImplementation niveauServicesImplementation;
 
-    @GetMapping
+    @Autowired
+    FiliereServicesImplementation filiereServicesImplementation;
 
+    @Autowired
+    MatiereServicesImplementation matiereServicesImplementation;
+
+    @GetMapping
     public List<Niveau> listeNiveau() {
         return niveauServicesImplementation.findAllNiveaux();
     }
@@ -51,19 +60,40 @@ public class NiveauRestController {
             return new ResponseEntity<>("Erreur de validation", HttpStatus.BAD_REQUEST);
         }
 
-        Niveau savedNiveau = niveauServicesImplementation.saveNiveau(niveau);
+        // Handle associations
+        if (niveau.getFilieres() != null) {
+            Set<Filiere> filieres = new HashSet<>();
+            for (Filiere filiere : niveau.getFilieres()) {
+                Filiere existingFiliere = filiereServicesImplementation.findFiliereById(filiere.getId());
+                if (existingFiliere != null) {
+                    filieres.add(existingFiliere);
+                }
+            }
+            niveau.setFilieres(filieres);
+        }
 
+        if (niveau.getMatieres() != null) {
+            Set<Matiere> matieres = new HashSet<>();
+            for (Matiere matiere : niveau.getMatieres()) {
+                Matiere existingMatiere = matiereServicesImplementation.findMatiereById(matiere.getId());
+                if (existingMatiere != null) {
+                    matieres.add(existingMatiere);
+                }
+            }
+            niveau.setMatieres(matieres);
+        }
+
+        Niveau savedNiveau = niveauServicesImplementation.saveNiveau(niveau);
         return new ResponseEntity<>(savedNiveau, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> mettreAJourAdresse(@PathVariable Long id, @Valid @RequestBody Niveau niveauDetails, BindingResult result) {
+    public ResponseEntity<?> mettreAJourNiveau(@PathVariable Long id, @Valid @RequestBody Niveau niveauDetails, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Erreur de validation", HttpStatus.BAD_REQUEST);
         }
 
         Niveau niveau = niveauServicesImplementation.findNiveauById(id);
-
         if (niveau == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Niveau not found with id: " + id);
@@ -72,24 +102,42 @@ public class NiveauRestController {
         // Mettre à jour les champs de l'niveau
         niveau.setNiveau(niveauDetails.getNiveau());
 
-        Niveau updatedNiveau = niveauServicesImplementation.saveNiveau(niveau);
+        // Handle associations
+        if (niveauDetails.getFilieres() != null) {
+            Set<Filiere> filieres = new HashSet<>();
+            for (Filiere filiere : niveauDetails.getFilieres()) {
+                Filiere existingFiliere = filiereServicesImplementation.findFiliereById(filiere.getId());
+                if (existingFiliere != null) {
+                    filieres.add(existingFiliere);
+                }
+            }
+            niveau.setFilieres(filieres);
+        }
 
+        if (niveauDetails.getMatieres() != null) {
+            Set<Matiere> matieres = new HashSet<>();
+            for (Matiere matiere : niveauDetails.getMatieres()) {
+                Matiere existingMatiere = matiereServicesImplementation.findMatiereById(matiere.getId());
+                if (existingMatiere != null) {
+                    matieres.add(existingMatiere);
+                }
+            }
+            niveau.setMatieres(matieres);
+        }
+
+        Niveau updatedNiveau = niveauServicesImplementation.saveNiveau(niveau);
         return new ResponseEntity<>(updatedNiveau, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> supprimerNiveau(@PathVariable Long id) {
         Niveau niveau = niveauServicesImplementation.findNiveauById(id);
-
         if (niveau == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Niveau not found with id: " + id);
         }
 
         niveauServicesImplementation.deleteNiveauById(niveau.getId());
-        return new ResponseEntity<>("Enseignant supprimé avec succès", HttpStatus.OK);
+        return new ResponseEntity<>("Niveau supprimé avec succès", HttpStatus.OK);
     }
-
-        
-
 }

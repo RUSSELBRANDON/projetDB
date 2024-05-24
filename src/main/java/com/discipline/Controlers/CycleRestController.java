@@ -1,6 +1,7 @@
 package com.discipline.Controlers;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discipline.Services.ServicesImplementations.CycleServicesImplentation;
+import com.discipline.Services.ServicesImplementations.FiliereServicesImplementation;
 import com.discipline.entities.Cycle;
+import com.discipline.entities.Filiere;
 
 
 @RestController
@@ -27,6 +30,8 @@ import com.discipline.entities.Cycle;
 public class CycleRestController {
     @Autowired
     CycleServicesImplentation cycleServicesImplementation;
+    @Autowired
+    FiliereServicesImplementation filiereServicesImplementation;
     @GetMapping
 
     public List<Cycle> listeCycle() {
@@ -51,6 +56,18 @@ public class CycleRestController {
         }
 
         Cycle savedcycle = cycleServicesImplementation.saveCycle(cycle);
+        // Handle associations
+        if (cycle.getFilieres() != null) {
+            Set<Filiere> filieres = new HashSet<>();
+            for (Filiere filiere : cycle.getFilieres()) {
+                Filiere existingFilieres = filiereServicesImplementation.findFiliereById(filiere.getId());
+                if (existingFilieres != null) {
+                    filieres.add(existingFilieres);
+                }
+            }
+            cycle.setFilieres(filieres);
+        }
+
 
         return new ResponseEntity<>(savedcycle, HttpStatus.CREATED);
     }
@@ -70,6 +87,18 @@ public class CycleRestController {
 
         // Mettre à jour les champs de l'cycle
         cycle.setCycle(cycleDetails.getCycle());
+
+        // Handle associations
+        if (cycleDetails.getFilieres() != null) {
+            Set<Filiere> filieres = new HashSet<>();
+            for (Filiere filiere : cycleDetails.getFilieres()) {
+                Filiere existingFiliere = filiereServicesImplementation.findFiliereById(filiere.getId());
+                if (existingFiliere != null) {
+                    filieres.add(existingFiliere);
+                }
+            }
+            cycle.setFilieres(filieres);
+        }
 
         Cycle updatedSalle = cycleServicesImplementation.saveCycle(cycle);
 

@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discipline.Services.ServicesImplementations.EnseignantServicesImplementation;
-import com.discipline.entities.Enseignant;
+import com.discipline.Services.ServicesImplementations.MatiereServicesImplementation;
 
-import java.util.List;
+import com.discipline.entities.Enseignant;
+import com.discipline.entities.Matiere;
+import java.util.*;
 import javax.validation.Valid;
 @RestController
 
@@ -24,7 +26,8 @@ import javax.validation.Valid;
 public class EnseignantRestController {
     @Autowired
     EnseignantServicesImplementation enseignantServicesImplementation;
-
+    @Autowired
+    MatiereServicesImplementation matiereServicesImplementation;
     @GetMapping
 
     public List<Enseignant> listeEnseignant() {
@@ -46,6 +49,19 @@ public class EnseignantRestController {
     public ResponseEntity<?> ajouterEnseignant(@Valid @RequestBody Enseignant enseignant, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Erreur de validation", HttpStatus.BAD_REQUEST);
+        }
+
+        // Handle associations
+
+        if (enseignant.getMatieres() != null) {
+            Set<Matiere> matieres = new HashSet<>();
+            for (Matiere matiere : enseignant.getMatieres()) {
+                Matiere existingMatiere = matiereServicesImplementation.findMatiereById(matiere.getId());
+                if (existingMatiere != null) {
+                    matieres.add(existingMatiere);
+                }
+            }
+            enseignant.setMatieres(matieres);
         }
 
         Enseignant savedEnseignant = enseignantServicesImplementation.saveEnseignant(enseignant);
@@ -70,6 +86,19 @@ public class EnseignantRestController {
         enseignant.setMatricule(enseignantDetails.getMatricule());
         enseignant.setNom(enseignantDetails.getNom());
         enseignant.setPrenom(enseignantDetails.getPrenom());
+
+        // Handle associations
+
+        if (enseignantDetails.getMatieres() != null) {
+            Set<Matiere> matieres = new HashSet<>();
+            for (Matiere matiere : enseignantDetails.getMatieres()) {
+                Matiere existingMatiere = matiereServicesImplementation.findMatiereById(matiere.getId());
+                if (existingMatiere != null) {
+                    matieres.add(existingMatiere);
+                }
+            }
+            enseignant.setMatieres(matieres);
+        }
 
         Enseignant updatedEnseignant = enseignantServicesImplementation.saveEnseignant(enseignant);
 

@@ -1,6 +1,6 @@
 package com.discipline.Controlers;
 
-import java.util.List;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.discipline.Services.ServicesImplementations.CoursServicesImplementation;
+import com.discipline.Services.ServicesImplementations.EnseignantServicesImplementation;
+import com.discipline.Services.ServicesImplementations.MatiereServicesImplementation;
+import com.discipline.Services.ServicesImplementations.NiveauServicesImplementation;
 import com.discipline.entities.Cours;
 
 @RestController
@@ -25,7 +28,13 @@ import com.discipline.entities.Cours;
 @RequestMapping("/cours")
 public class CoursRestController {
     @Autowired
+    NiveauServicesImplementation niveauServicesImplementation;
+    @Autowired
     CoursServicesImplementation coursServicesImplementation;
+    @Autowired
+    MatiereServicesImplementation matiereServicesImplementation2;
+    @Autowired
+    EnseignantServicesImplementation enseignantServicesImplementation;
 
     @GetMapping
 
@@ -71,6 +80,11 @@ public class CoursRestController {
         // Mettre à jour les champs du cours
         cours.setTitre(coursDetails.getTitre());
         cours.setJour(coursDetails.getJour());
+        cours.setEnseignant(coursDetails.getEnseignant());
+        cours.setSalle(coursDetails.getSalle());
+        cours.setMatiere(coursDetails.getMatiere());
+
+        
 
 
         Cours updatedSalle = coursServicesImplementation.saveCours(cours);
