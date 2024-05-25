@@ -102,7 +102,7 @@ public class AdresseRestController {
         return new ResponseEntity<>("Adresse supprimée avec succès", HttpStatus.OK);
     }
 
-    @GetMapping("/{adresse}")
+    @GetMapping("adresse/{adresse}")
     public ResponseEntity<Object> findCoursByMatiere(@PathVariable String adresse){
         Adresse adresse1 = adresseServicesImplementation.findAdresseByAdresse(adresse);
         if (adresse1 != null){

@@ -119,7 +119,7 @@ public class CycleRestController {
     }
 
 
-    @GetMapping("/{cycle}")
+    @GetMapping("cycle/{cycle}")
     public ResponseEntity<Object> findCycleByCycle(@PathVariable String cycle){
         Cycle cycle1 = cycleServicesImplementation.findCycleByCycle(cycle);
         if (cycle1 != null){

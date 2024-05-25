@@ -141,7 +141,7 @@ public class NiveauRestController {
         return new ResponseEntity<>("Niveau supprimé avec succès", HttpStatus.OK);
     }
 
-    @GetMapping("/{niveau}")
+    @GetMapping("niveau/{niveau}")
     public ResponseEntity<Object> findNiveauByNiveau(@PathVariable String niveau){
        Niveau niveau1 = niveauServicesImplementation.findNiveauByNiveau(niveau);
         if (niveau1 != null){

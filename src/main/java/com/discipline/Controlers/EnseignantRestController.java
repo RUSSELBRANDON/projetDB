@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.discipline.Services.ServicesImplementations.EnseignantServicesImplementation;
 import com.discipline.Services.ServicesImplementations.MatiereServicesImplementation;
-
+import com.discipline.entities.Adresse;
 import com.discipline.entities.Enseignant;
 import com.discipline.entities.Matiere;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 @RestController
 
@@ -120,13 +122,27 @@ public class EnseignantRestController {
     }
 
 
-    @GetMapping("/{matricule}")
+    @GetMapping("/matricule/{matriculeEnseignant}")
     public ResponseEntity<Object> findEnseignantByMatricule(@PathVariable String matriculeEnseignant){
         Enseignant enseignant = enseignantServicesImplementation.findEnseignantByMatricule(matriculeEnseignant);
-        if (enseignant != null){
-            return new ResponseEntity<>(enseignant, HttpStatus.FOUND);
+        if (enseignant != null) {
+            // Créer une map pour stocker les informations de l'enseignant
+            Map<String, Object> enseignantInfo = new HashMap<>();
+            enseignantInfo.put("matricule", enseignant.getMatricule());
+            enseignantInfo.put("nom", enseignant.getNom());
+            enseignantInfo.put("prenom", enseignant.getPrenom());
+    
+            // Extraire les adresses de l'enseignant
+            List<String> adresses = enseignant.getAdresses().stream()
+                .map(Adresse::getAdresse)
+                .collect(Collectors.toList());
+            enseignantInfo.put("adresses", adresses);
+    
+            // Retourner les informations de l'enseignant dans la réponse
+            return new ResponseEntity<>(enseignantInfo, HttpStatus.OK);
         }
         return new ResponseEntity<>("Cet enseignant n'existe pas", HttpStatus.NOT_FOUND);
     }
+    
     
 }

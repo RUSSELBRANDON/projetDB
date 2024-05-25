@@ -106,7 +106,7 @@ public class CoursRestController {
     }
 
 
-    @GetMapping("/{matiere}")
+    @GetMapping("cours/{matiere}")
     public ResponseEntity<Object> findCoursByMatiere(@PathVariable String matiere){
         Cours cours = coursServicesImplementation.findCoursByMatiere(matiere);
         if (cours != null){

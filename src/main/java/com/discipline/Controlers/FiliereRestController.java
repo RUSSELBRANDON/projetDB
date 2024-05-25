@@ -144,12 +144,18 @@ public class FiliereRestController {
         return new ResponseEntity<>("Filiere supprimé avec succès", HttpStatus.OK);
     }
 
-    @GetMapping("/{nom}")
+    @GetMapping("nom/{nom}")
     public ResponseEntity<Object> findFiliereByNom(@PathVariable String nom){
         Filiere filiere = filiereServicesImplementation.findFiliereByNom(nom);
-        if (filiere != null){
-            return new ResponseEntity<>(filiere, HttpStatus.FOUND);
+        if (filiere != null) {
+            // Créer une map pour stocker le nom de la filière
+            Map<String, Object> filiereInfo = new HashMap<>();
+            filiereInfo.put("nom", filiere.getNom());
+    
+            // Retourner le nom de la filière dans la réponse
+            return new ResponseEntity<>(filiereInfo, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Cette filiere n'existe pas", HttpStatus.NOT_FOUND);
-    }
+        return new ResponseEntity<>("Cette filière n'existe pas", HttpStatus.NOT_FOUND);
+}
+
 }
