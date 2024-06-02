@@ -7,11 +7,7 @@ Ce projet a pour objectif dautomatiser le processus de gestion des emplois de te
 - [Pré-requis](#pré-requis)
 - [Installation](#installation)
 - [Démarrage](#démarrage)
-- [Utilisation](#utilisation)
 - [API Endpoints](#api-endpoints)
-- [Tests](#tests)
-- [Contribution](#contribution)
-- [License](#license)
 
 ## Pré-requis
 
@@ -26,8 +22,8 @@ Pour exécuter ce projet, vous aurez besoin de :
 1. Clonez le dépôt sur votre machine locale :
 
     ```bash
-    git clone https://github.com/votre-utilisateur/nom-du-projet.git
-    cd nom-du-projet
+    git clone https://github.com/RUSSELBRANDON/projetDB.git
+    cd projetDB
     ```
 
 2. Configurez la base de données :
